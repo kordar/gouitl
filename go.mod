@@ -1,4 +1,4 @@
-module gitee.com/kordar/util
+module github.com/kordar/goutil
 
 go 1.16
 
