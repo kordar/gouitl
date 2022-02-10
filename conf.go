@@ -2,6 +2,7 @@ package goutil
 
 import (
 	"github.com/Unknwon/goconfig"
+	"github.com/spf13/cast"
 	"log"
 )
 
@@ -31,10 +32,23 @@ func GetSettingValue(key string) string {
 	}
 }
 
-func GetSectionValue(key string, field string) string {
-	if value, err := cfg.GetValue(key, field); err == nil {
+func GetSectionValue(section string, key string) string {
+	if value, err := cfg.GetValue(section, key); err == nil {
 		return value
 	} else {
 		return ""
 	}
+}
+
+func GetSectionValueInt(section string, key string) int {
+	value := GetSectionValue(section, key)
+	return cast.ToInt(value)
+}
+
+func GetSection(section string) map[string]string {
+	res, err := cfg.GetSection(section)
+	if err != nil {
+		return map[string]string{}
+	}
+	return res
 }
