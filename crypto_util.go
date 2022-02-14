@@ -42,3 +42,11 @@ func HashCode(s string) int {
 	// v == MinInt
 	return 0
 }
+
+func CRC32(bytes []byte) uint32 {
+	return crc32.ChecksumIEEE(bytes)
+}
+
+func CRC32Str(str string) uint32 {
+	return crc32.ChecksumIEEE([]byte(str))
+}
