@@ -1,54 +1,50 @@
 package goutil
 
 import (
-	"github.com/Unknwon/goconfig"
-	"github.com/spf13/cast"
+	"github.com/spf13/viper"
 	"log"
 )
 
-var cfg *goconfig.ConfigFile
+var cfg = viper.New()
 var errCfg error
 
 func ConfigInit(filepath string) {
-	cfg, errCfg = goconfig.LoadConfigFile(filepath)
+	ConfigInit2(filepath, "ini")
+}
+
+func ConfigInit2(filepath string, in string) {
+	cfg.SetConfigFile(filepath)
+	cfg.SetConfigType(in)
+	errCfg = cfg.ReadInConfig()
 	if errCfg != nil {
 		log.Fatal(errCfg)
 	}
 }
 
 func GetSystemValue(key string) string {
-	if value, err := cfg.GetValue("system", key); err == nil {
-		return value
-	} else {
-		return ""
-	}
+	return cfg.GetString("system." + key)
 }
 
 func GetSettingValue(key string) string {
-	if value, err := cfg.GetValue("setting", key); err == nil {
-		return value
-	} else {
-		return ""
-	}
+	return cfg.GetString("setting." + key)
 }
 
 func GetSectionValue(section string, key string) string {
-	if value, err := cfg.GetValue(section, key); err == nil {
-		return value
-	} else {
-		return ""
-	}
+	return cfg.GetString(section + "." + key)
 }
 
 func GetSectionValueInt(section string, key string) int {
-	value := GetSectionValue(section, key)
-	return cast.ToInt(value)
+	return cfg.GetInt(section + "." + key)
 }
 
 func GetSection(section string) map[string]string {
-	res, err := cfg.GetSection(section)
-	if err != nil {
-		return map[string]string{}
-	}
-	return res
+	return cfg.GetStringMapString(section)
+}
+
+func UnmarshalKey(key string, rawVal interface{}, opts ...viper.DecoderConfigOption) error {
+	return cfg.UnmarshalKey(key, rawVal, opts...)
+}
+
+func GetCfg() *viper.Viper {
+	return cfg
 }

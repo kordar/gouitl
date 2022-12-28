@@ -1,14 +1,8 @@
-package goutil
+package helper
 
 import "strings"
 
-/**
- * 驼峰转蛇形 snake string
- * @description XxYy to xx_yy , XxYY to xx_y_y
- * @date 2020/7/30
- * @param s 需要转换的字符串
- * @return string
- **/
+// SnakeString /**
 func SnakeString(s string) string {
 	data := make([]byte, 0, len(s)*2)
 	j := false
@@ -17,7 +11,7 @@ func SnakeString(s string) string {
 		d := s[i]
 		// or通过ASCII码进行大小写的转化
 		// 65-90（A-Z），97-122（a-z）
-		//判断如果字母为大写的A-Z就在前面拼接一个_
+		// 判断如果字母为大写的A-Z就在前面拼接一个_
 		if i > 0 && d >= 'A' && d <= 'Z' && j {
 			data = append(data, '_')
 		}
@@ -30,13 +24,7 @@ func SnakeString(s string) string {
 	return strings.ToLower(string(data[:]))
 }
 
-/**
- * 蛇形转驼峰
- * @description xx_yy to XxYx  xx_y_y to XxYY
- * @date 2020/7/30
- * @param s要转换的字符串
- * @return string
- **/
+// CamelString /**
 func CamelString(s string) string {
 	data := make([]byte, 0, len(s))
 	j := false
