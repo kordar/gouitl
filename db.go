@@ -31,7 +31,7 @@ func GetDbPool() *DbConnPool {
 func (m *DbConnPool) InitDataPool(items ...DBItem) (issucc bool) {
 	for _, item := range items {
 		if m.handle[item.GetName()] != nil {
-			log.Printf("实例[%s]已存在", item.GetName())
+			log.Printf("实例[%s]已存在\n", item.GetName())
 			continue
 		}
 		var err error
