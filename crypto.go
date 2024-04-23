@@ -1,4 +1,4 @@
-package crypto
+package goutil
 
 import (
 	"crypto/md5"
